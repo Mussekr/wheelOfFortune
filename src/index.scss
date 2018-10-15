@@ -1,0 +1,98 @@
+$white: #fff;
+$black: #000;
+
+@mixin shadow($shadow-color) {
+  box-shadow: 0 0 .25em adjust_color($shadow-color, $alpha: .5) inset;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+
+.word-list {
+  position: relative;
+  display: flex;
+
+  &-container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: center;
+  }
+
+  &-word {
+    padding: 0.8em;
+    border: .125em solid black;
+    @include shadow(black);
+    text-align: center;
+    transition: background 50ms, box-shadow 50ms, color 50ms;
+    background: $white;
+    color: $black;
+    font-size: 1.5em;
+  }
+
+}
+
+.rainbow {
+  /* Chrome, Safari, Opera */
+ -webkit-animation: rainbow 3s infinite; 
+ 
+ /* Internet Explorer */
+ -ms-animation: rainbow 3s infinite;
+ 
+ /* Standar Syntax */
+ animation: rainbow 3s infinite; 
+
+ &-header {
+   font-size: 8vh;
+ }
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow{
+ 0%{color: orange;}	
+ 10%{color: purple;}	
+ 20%{color: red;}
+ 40%{color: yellow;}
+ 60%{color: green;}
+ 100%{color: blue;}
+ 100%{color: orange;}	
+}
+/* Internet Explorer */
+@-ms-keyframes rainbow{
+ 0%{color: orange;}	
+ 10%{color: purple;}	
+ 20%{color: red;}
+ 40%{color: yellow;}
+ 60%{color: green;}
+ 100%{color: blue;}
+ 100%{color: orange;}	
+}
+
+/* Standar Syntax */
+@keyframes rainbow{
+ 0%{color: orange;}	
+ 10%{color: purple;}	
+ 20%{color: red;}
+ 40%{color: yellow;}
+ 60%{color: green;}
+ 100%{color: blue;}
+ 100%{color: orange;}
+}
+
+.u-padding-left {
+  padding-left: 1.5em !important;
+}

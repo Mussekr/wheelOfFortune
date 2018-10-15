@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import Init from './containers/Init';
+import Game from './containers/Game';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+	static propTypes = {
+		isGameStarted: PropTypes.bool,
+	};
 
-export default App;
+	render() {
+		const { isGameStarted, } = this.props;
+		return (
+			<div>
+				<div className="row">
+					<div className="column column-50 column-offset-50"><h1 className="rainbow">Onnenpyörä</h1></div>
+				</div>
+				<div className="row">
+					<div className="column">
+						{isGameStarted ? <Game /> : <Init />}
+					</div>
+				</div>
+      		</div>
+		);
+	}
+}
+const mapStateToProps = (state) => ({
+		isGameStarted: state.gameReducer.isGameStarted,
+})
+
+export default connect(mapStateToProps)(App);
