@@ -1,0 +1,16 @@
+.player-list {
+    &-container {
+        display: inline-block;
+    }
+
+    &-player {
+        padding: 12px;
+        border: 1px dotted;
+        display: inline-block;
+        margin-left: 15px;
+    }
+
+    &-is-turn {
+        border: 5px solid;
+    }
+}

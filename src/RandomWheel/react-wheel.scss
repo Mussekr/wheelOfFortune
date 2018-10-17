@@ -33,10 +33,11 @@ $black: #000;
   }
 
   &__segment {
-    padding: .5em;
+    padding: .75em;
     border: .125em solid black;
     @include shadow(black);
     text-align: center;
+    font-size: 1.2em;
     transition: background 50ms, box-shadow 50ms, color 50ms;
 
     &.blue {

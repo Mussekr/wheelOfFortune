@@ -1,0 +1,15 @@
+.character-list {
+    &-container {
+        display: inline-block;
+    }
+
+    &-character {
+        padding: 12px;
+        border: 1px dotted;
+        display: inline-block;
+        margin-left: 15px;
+        cursor: pointer;
+        font-size: 1.5em;
+        text-transform: capitalize;
+    }
+}

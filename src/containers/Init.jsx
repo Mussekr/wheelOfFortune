@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/actionCreators';
 
+const specialCharacters = ['.', ',', '-', '?', '!', ':', ';'];
+
 class Init extends Component {
 
     state = {
@@ -19,7 +21,7 @@ class Init extends Component {
             phraseModel = phraseModel.concat([
                 characterArray.map((character) => ({
                     char: character,
-                    visible: true,
+                    visible: specialCharacters.find((char) => char === character),
                 }))
             ]);
         });
@@ -31,14 +33,17 @@ class Init extends Component {
         ev.preventDefault();
         const playerModel = {
             player1: {
+                id: 1,
                 name: this.state.player1,
                 points: 0,
             },
             player2: {
+                id: 2,
                 name: this.state.player2,
                 points: 0,
             },
             player3: {
+                id: 3,
                 name: this.state.player3,
                 points: 0,
             },

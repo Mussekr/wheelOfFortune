@@ -1,9 +1,3 @@
-$white: #fff;
-$black: #000;
-
-@mixin shadow($shadow-color) {
-  box-shadow: 0 0 .25em adjust_color($shadow-color, $alpha: .5) inset;
-}
 
 body {
   margin: 0;
@@ -18,28 +12,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-
-.word-list {
-  position: relative;
-
-  &-container {
-    display: inline-block;
-  }
-
-  &-word {
-    display: inline-block;
-    padding: 0.8em;
-    border: .125em solid black;
-    @include shadow(black);
-    text-align: center;
-    transition: background 50ms, box-shadow 50ms, color 50ms;
-    background: $white;
-    color: $black;
-    font-size: 1.5em;
-  }
-
 }
 
 .rainbow {
@@ -91,4 +63,8 @@ code {
 
 .u-padding-left {
   padding-left: 1.5em !important;
+}
+
+.row {
+  margin-top: 25px;
 }

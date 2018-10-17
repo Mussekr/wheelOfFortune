@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './word-list.scss';
 
 export default class WordList extends Component {
     static propTypes = {
         phrase: PropTypes.array,
     };
     static defaultProps = {
-        phrase: [{}],
+        phrase: [[{}]],
     }
     render() {
-        console.log(this.props.phrase);
         const words = this.props.phrase.map((word, index) => {
             const characters = word.map((character, characterIndex) => {
                 return (
-                    <div key={`${index}-${characterIndex}`} className="word-list-word">
+                    <div key={`${index}-${characterIndex}`} className={`word-list-word ${character.visible ? 'word-list-anim-spin' : ''}`}>
                         {character.visible ? character.char : '-'}
                     </div>
                 )
