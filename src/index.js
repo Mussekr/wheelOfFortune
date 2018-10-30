@@ -1,35 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, compose, applyMiddleware } from 'redux';
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import reducers from './reducers';
 import './index.scss';
 import App from './App';
+import createStore from './store';
 import * as serviceWorker from './serviceWorker';
-import 'milligram/dist/milligram.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import './darkly.scss';
 
-
-let store = null;
 if (process.env.NODE_ENV === 'production') {
-    store = createStore(
-      reducers,
-      compose(applyMiddleware(thunk)),
-    );
-  } else {
-    store = createStore(
-      reducers,
-      compose(
-        applyMiddleware(thunk),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-      ),
-    );
-  }
+  window.addEventListener("beforeunload", function (e) {
+    var confirmationMessage = 'It looks like you have been editing something. '
+                            + 'If you leave before saving, your changes will be lost.';
+  
+    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+  });
+}
+
+const store = createStore();
 
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
+    <Provider store={store.store}>
+        <PersistGate loading={null} persistor={store.persistor}>
+            <App />
+        </PersistGate>
     </Provider>
 , document.getElementById('root'));
 

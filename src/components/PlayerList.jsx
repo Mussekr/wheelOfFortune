@@ -12,7 +12,7 @@ export default class PlayerList extends Component {
     render() {
         const { players, playerTurn } = this.props;
         return (
-            <div className="player-list-container">
+            <div className="player-list-container float-left">
                 {_.map(players, (player, index) => (
                 <div className={`player-list-player ${player.id === playerTurn ? 'player-list-is-turn' : ''}`} key={index}>
                     {player.name}

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
+import { Col, Button } from 'reactstrap';
 import Wheel from '../RandomWheel';
 import actionCreators from '../actions/actionCreators';
 
@@ -26,22 +28,25 @@ class PointWheel extends Component {
 
     getSegments() {
         let segments = [];
-        for(let i = 1; i < 21; i++ ) {
+        for(let i = 1; i < 13; i++ ) {
             segments.push({
-                name: String(i * 100),
+                name: String(i * 25),
                 color: this.getColors(i),
             });
         }
-        segments = insert(segments, 4, { name: 'Rosvo', color: 'black' });
-        segments = insert(segments, 19, { name: 'Ohi', color: 'black' });
+        
+        segments = insert(segments, 4, { name: 'Ohi', color: 'black' });
+        segments = insert(segments, 10, { name: 'Rosvo', color: 'black' });
+        segments = insert(segments, 16, { name: 'Ohi', color: 'black' });
         return segments;
     }
 
     render() {
         const segments = this.getSegments();
-        const { dispatch } = this.props;
+        const { dispatch, showConsonants } = this.props;
         return (
-            <div>
+            <>
+            <Col sm={12} md={8}>
                 <Wheel
                     segments={segments}
                     onComplete={(selected) => dispatch(actionCreators.onSpinComplete(selected))}
@@ -49,11 +54,20 @@ class PointWheel extends Component {
                         this.wheel = wheelRef;
                     }}
                 />
-                <button onClick={() => this.wheel.spinWheel()}>Pyöritä</button>
-            </div>
+            </Col>
+            <Col sm={12} md={4}>
+                {!showConsonants && (
+                    <Button block color="primary" onClick={() => this.wheel.spinWheel()}>Pyöritä</Button>
+                )}
+            </Col>
+            </>
 
         )
     }
 }
 
-export default connect()(PointWheel);
+const mapStateToProps = (state) => ({
+    showConsonants: _.get(state, 'wordReducer.showConsonants', false),
+})
+
+export default connect(mapStateToProps)(PointWheel);

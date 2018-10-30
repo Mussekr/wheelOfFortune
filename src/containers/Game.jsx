@@ -1,31 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { Row, Col} from 'reactstrap';
 import PropTypes from 'prop-types';
 import WordList from '../WordList';
 import Wheel from './Wheel';
-import PlayerList from '../components/PlayerList';
 import CharacterList from '../components/CharacterList';
 import actionCreators from '../actions/actionCreators';
+import Logs from './Logs';
 
 class Game extends Component {
     static propTypes = {
         phrase: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
     };
-
-    resetGame = () => {
-        //eslint-disable-next-line
-        if(confirm('Oletko varma? Progressio menetetään.')) {
-            this.props.dispatch(actionCreators.resetGame());
-        }
-    };
-
-    skipTurn = () => {
-        //eslint-disable-next-line
-        if(confirm('Oletko varma?')) {
-            this.props.dispatch(actionCreators.changeTurn())
-        }
-    }
 
     render() {
         const {
@@ -37,49 +24,46 @@ class Game extends Component {
             dispatch,
             vowels,
             hasBoughtVowel,
+            overridePhrase,
         } = this.props;
         const playerInTurn = _.find(players, { id: playerTurn });
         console.log(playerInTurn);
         return (
-            <div>
-                <div className="row">
-                    <button onClick={this.resetGame}>Resetoi peli</button>
-                    <button onClick={this.skipTurn}>Skippaa vuoro (override)</button>
-                    <div className="column column column-70 column-offset-30">
-                        <PlayerList players={players} playerTurn={playerTurn} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column column column-90 column-offset-10">
-                        <WordList phrase={phrase} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column column-75 float-right">
-                        <Wheel />
-                    </div>
-                </div>
+            <>
+                <Row>
+                    <Wheel />
+                </Row>
+                <Row>
+                    <Col sm={12} md={{ size: 12 }} className="d-flex justify-content-end">
+                        <WordList override={overridePhrase} phrase={phrase} />
+                    </Col>
+                </Row>
                 {
-                    showConsonants && (
-                        <div className="row">
-                            <div className="column column-75 float-right">
+                    showConsonants && ! overridePhrase && (
+                        <Row>
+                            <Col sm={12} md={{ size: 12 }} className="text-center">
                                 <h3>Valitse konsonantti</h3>
                                 <CharacterList onClickCharacter={(selected) => dispatch(actionCreators.checkPhraseCharacters(selected, 'consonant'))} characters={consonants} />
-                            </div>
-                        </div>
+                            </Col>
+                        </Row>
                     )
                 }
                 {
-                    !showConsonants && !hasBoughtVowel && _.get(playerInTurn, 'points') >= 300 && (
-                        <div className="row">
-                            <div className="column column-75 float-right">
+                    !showConsonants && !hasBoughtVowel && _.get(playerInTurn, 'points') >= 300 && ! overridePhrase &&  (
+                        <Row>
+                            <Col sm={12} md={{ size: 11 }} className="text-center">
                                 <h3>Osta vokaali, 300 points / kpl</h3>
                                 <CharacterList onClickCharacter={(selected) => dispatch(actionCreators.checkPhraseCharacters(selected, 'vowel'))} characters={vowels} />
-                            </div>
-                        </div>
+                            </Col>
+                        </Row>
                     )
                 }
-            </div>
+                <Row>
+                    <Col sm={12} md={{ size: 4, offset: 8 }} className="text-left">
+                        <Logs />
+                    </Col>
+                </Row>
+            </>
         );
     }
 }
@@ -93,6 +77,7 @@ const mapStateToProps = (state) => ({
     showVowels: _.get(state, 'wordReducer.showVowels', false),
     vowels: _.get(state, 'wordReducer.vowels', []),
     hasBoughtVowel: _.get(state, 'wordReducer.hasBoughtVowel', false),
+    overridePhrase: _.get(state, 'wordReducer.override', false),
 });
 
 export default connect(mapStateToProps)(Game);

@@ -13,6 +13,8 @@ const reducer = (state = initialState, action) => {
             return { ...state, playerTurn: action.nextTurn };
         case actions.ADD_POINTS:
             return { ...state, players: action.players, };
+        case actions.RESET_GAME:
+            return { ...initialState };
         default:
             return state;
     }

@@ -5,16 +5,19 @@ import './word-list.scss';
 export default class WordList extends Component {
     static propTypes = {
         phrase: PropTypes.array,
+        override: PropTypes.bool,
     };
     static defaultProps = {
         phrase: [[{}]],
+        override: false,
     }
     render() {
-        const words = this.props.phrase.map((word, index) => {
+        const { override, phrase } = this.props;
+        const words = phrase.map((word, index) => {
             const characters = word.map((character, characterIndex) => {
                 return (
-                    <div key={`${index}-${characterIndex}`} className={`word-list-word ${character.visible ? 'word-list-anim-spin' : ''}`}>
-                        {character.visible ? character.char : '-'}
+                    <div key={`${index}-${characterIndex}`} className={`word-list-word ${character.visible || override ? 'word-list-anim-spin' : ''}`}>
+                        {character.visible || override ? character.char : '*'}
                     </div>
                 )
             });

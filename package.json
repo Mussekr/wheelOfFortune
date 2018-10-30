@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.1.3",
     "easing": "^1.1.2",
     "lodash": "^4.17.11",
-    "milligram": "^1.3.0",
     "node-sass": "^4.9.3",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-random-wheel": "^0.1.0",
     "react-redux": "^5.0.7",
     "react-scripts": "@next",
+    "reactstrap": "^6.5.0",
     "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

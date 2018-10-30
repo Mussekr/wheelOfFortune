@@ -9,6 +9,7 @@ export const initialState = {
     showConsonants: false,
     showVowels: false,
     hasBoughtVowel: false,
+    override: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +26,10 @@ const reducer = (state = initialState, action) => {
             return { ...state, hasBoughtVowel: true };
         case actions.RESET_BOUGHT_VOWEL:
             return { ...state, hasBoughtVowel: false };
+        case actions.OVERRIDE_PHRASE:
+            return { ...state, override: true, };
+        case actions.RESET_GAME:
+            return { ...initialState };
         default:
             return state;
     }

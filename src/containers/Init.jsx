@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/actionCreators';
+import { Row, Col, Form, Button, FormGroup, Label, Input } from 'reactstrap';
+
 
 const specialCharacters = ['.', ',', '-', '?', '!', ':', ';'];
 
@@ -64,26 +66,32 @@ class Init extends Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.submitInit}>
-                    <div className="row">
-                        <div className="column column-50 column-offset-25">
-                            <h1>Lähtöarvot peliin</h1>
-                            <label htmlFor="player1" >Pelaaja 1</label>
-                            <input id="player1" type="text" onChange={(ev) => this.onInputChange('player1', ev.target.value)} />
-                            <label htmlFor="player2" >Pelaaja 2</label>
-                            <input id="player2" type="text" onChange={(ev) => this.onInputChange('player2', ev.target.value)} />
-                            <label htmlFor="player3" >Pelaaja 3</label>
-                            <input id="player3" type="text" onChange={(ev) => this.onInputChange('player3', ev.target.value)} />
-                            <label htmlFor="word-phrase" >Lause</label>
-                            <input id="word-phrase" type="text" onChange={(ev) => this.onInputChange('wordPhrase', ev.target.value)} />
-                            <div className="float-right">
-                                <button type="submit">Aloita</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <>
+                <Form onSubmit={this.submitInit}>
+                    <Row>
+                        <Col sm={12} md={{ offset: 4, size: 8 }}>
+                            <h1 className="display-5">Lähtöarvot peliin</h1>
+                            <FormGroup>
+                                <Label for="player1">Pelaaja 1</Label>
+                                <Input valid={Boolean(this.state.player1)} invalid={! Boolean(this.state.player1)} id="player1" type="text" onChange={(ev) => this.onInputChange('player1', ev.target.value)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="player2">Pelaaja 2</Label>
+                                <Input valid={Boolean(this.state.player2)} invalid={! Boolean(this.state.player2)} id="player2" type="text" onChange={(ev) => this.onInputChange('player2', ev.target.value)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="player3">Pelaaja 3</Label>
+                                <Input valid={Boolean(this.state.player3)} invalid={! Boolean(this.state.player3)} id="player3" type="text" onChange={(ev) => this.onInputChange('player3', ev.target.value)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="phrase">Lause</Label>
+                                <Input valid={Boolean(this.state.wordPhrase)} invalid={! Boolean(this.state.wordPhrase)} id="phrase" type="password" onChange={(ev) => this.onInputChange('wordPhrase', ev.target.value)} />
+                            </FormGroup>
+                            <Button block type="submit">Aloita</Button>
+                        </Col>
+                    </Row>
+                </Form>
+            </>
         );
     }
 }

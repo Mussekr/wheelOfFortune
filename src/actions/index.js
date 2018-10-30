@@ -1,6 +1,7 @@
 const playerNamespace = 'players';
 const wordNamespace = 'word';
 const gameNamespace = 'game';
+const logNamespace = 'logs';
 
 export default {
     SET_PLAYERS: `${playerNamespace}/SET_PLAYERS`,
@@ -14,6 +15,8 @@ export default {
     ADD_POINTS: `${playerNamespace}/ADD_POINTS`,
     BOUGHT_VOWEL: `${wordNamespace}/BOUGHT_VOWEL`,
     RESET_BOUGHT_VOWEL: `${wordNamespace}/RESET_BOUGHT_VOWEL`,
+    OVERRIDE_PHRASE: `${wordNamespace}/OVERRIDE_PHRASE`,
+    LOG_MESSAGE: `${logNamespace}/LOG_MESSAGE`,
 };
 
 

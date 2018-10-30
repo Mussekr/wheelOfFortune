@@ -76,9 +76,11 @@ const checkPhraseCharacters = (character, type = 'consonant') => (dispatch, getS
     );
     if (charactersMatched > 0) {
         dispatch(setPhrase({ phrase: newPhrase }));
+        dispatch(addLog(`Kirjainta ${character} löytyi ${charactersMatched} kappaletta! Pyöritä uudelleen tai osta vokaali!`));
     } else {
         // Not a single match, so turn changes
         dispatch(changeTurn());
+        dispatch(addLog(`Kirjainta ${character} ei löytynyt! Vuoro siirtyy seuraavalle!`));
     }
     if (type === 'vowel') {
         dispatch(removeCharacter(character ,'vowels'));
@@ -94,16 +96,23 @@ const checkPhraseCharacters = (character, type = 'consonant') => (dispatch, getS
 
 const onSpinComplete = (spinValue) => (dispatch, getState) => {
     const state = getState();
+    const players = state.playerReducer.players;
+    const playerTurn = _.get(state, 'playerReducer.playerTurn');
+    const playerInTurn = _.find(players, { id: playerTurn });
     if (_.includes(['Rosvo', 'Ohi'], spinValue.name)) {
         console.log('Tää vuoro nyt missas!');
         if (spinValue.name === 'Rosvo') {
             const currentPoints = _.get(_.find(_.get(state, 'playerReducer.players', []), (player) => player.id === _.get(state, 'playerReducer.playerTurn')), 'points');
             dispatch(addPoints(-currentPoints))
+            dispatch(addLog('Ohisektori! Vuoro siirtyi seuraavalle!'));
+        } else {
+            dispatch(addLog(`Rosvosektori! Pelaaja ${playerInTurn.name} menetti kaikki pisteensä!`));
         }
         dispatch(changeTurn());
         return;
     }
     dispatch(addPoints(spinValue.name));
+    dispatch(addLog(`Pelaaja ${playerInTurn.name} sai ${spinValue.name} pistettä!`));
     dispatch(showCharacterList('showConsonants'));
 };
 
@@ -129,6 +138,15 @@ const resetGame = () => (dispatch) => dispatch({
     type: actions.RESET_GAME,
 });
 
+const overridePhrase = () => (dispatch) => dispatch({
+    type: actions.OVERRIDE_PHRASE,
+});
+
+const addLog = (log) => (dispatch) => dispatch({
+    type: actions.LOG_MESSAGE,
+    log
+});
+
 export default {
     setPhrase,
     setPlayers,
@@ -137,4 +155,6 @@ export default {
     checkPhraseCharacters,
     resetGame,
     changeTurn,
+    overridePhrase,
+    addLog,
 }

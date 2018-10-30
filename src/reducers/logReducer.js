@@ -1,15 +1,13 @@
 import actions from '../actions';
 
 const initialState = {
-    isGameStarted: false,
+    logs: [],
 };
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case actions.START_GAME:
-            return { ...state, isGameStarted: true };
-        case actions.RESET_GAME:
-            return { ...initialState };
+        case actions.LOG_MESSAGE:
+            return { ...state, logs: [ ...state.logs, action.log ] };
         default:
             return state;
     }

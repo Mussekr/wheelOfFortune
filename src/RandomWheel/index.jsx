@@ -40,7 +40,8 @@ export default class ReactWheel extends React.Component {
 
 	spinWheel() {
         let numSegments = this.props.segments.length;
-        const spinTime = getRandomArbitrary(3250, 6500);
+		const spinTime = getRandomArbitrary(3250, 6500);
+		console.log(spinTime);
 		this.setState( {
 			animating: true
 		} );
