@@ -15,14 +15,14 @@ $black: #000;
   
     &-word {
       display: inline-block;
-      padding: 0.8em;
+      padding: 1em;
       border: .125em solid black;
       @include shadow(black);
       text-align: center;
       transition: background 50ms, box-shadow 50ms, color 50ms;
       background: $white;
       color: $black;
-      font-size: 1.5em;
+      font-size: 1.8em;
       text-transform: capitalize;
       font-weight: 600;
     }

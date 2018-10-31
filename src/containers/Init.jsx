@@ -69,7 +69,7 @@ class Init extends Component {
             <>
                 <Form onSubmit={this.submitInit}>
                     <Row>
-                        <Col sm={12} md={{ offset: 4, size: 8 }}>
+                        <Col sm={12} md={{ offset: 4, size: 4 }}>
                             <h1 className="display-5">Lähtöarvot peliin</h1>
                             <FormGroup>
                                 <Label for="player1">Pelaaja 1</Label>
@@ -84,7 +84,7 @@ class Init extends Component {
                                 <Input valid={Boolean(this.state.player3)} invalid={! Boolean(this.state.player3)} id="player3" type="text" onChange={(ev) => this.onInputChange('player3', ev.target.value)} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="phrase">Lause</Label>
+                                <Label for="phrase">Fraasi</Label>
                                 <Input valid={Boolean(this.state.wordPhrase)} invalid={! Boolean(this.state.wordPhrase)} id="phrase" type="password" onChange={(ev) => this.onInputChange('wordPhrase', ev.target.value)} />
                             </FormGroup>
                             <Button block type="submit">Aloita</Button>

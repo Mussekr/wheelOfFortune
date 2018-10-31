@@ -60,7 +60,11 @@ const removeCharacter = (char, type) => (dispatch, getState) => {
 
 const checkPhraseCharacters = (character, type = 'consonant') => (dispatch, getState) => {
     const state = getState();
+    const players = state.playerReducer.players;
+    const playerTurn = _.get(state, 'playerReducer.playerTurn');
+    const playerInTurn = _.find(players, { id: playerTurn });
     const phrase = _.get(state, 'wordReducer.phrase', []);
+    const hasBoughtVowel = _.get(state, 'wordReducer.hasBoughtVowel', false);
     let charactersMatched = 0;
     const newPhrase = phrase.map((word) =>
         word.map((char) => {
@@ -76,11 +80,15 @@ const checkPhraseCharacters = (character, type = 'consonant') => (dispatch, getS
     );
     if (charactersMatched > 0) {
         dispatch(setPhrase({ phrase: newPhrase }));
-        dispatch(addLog(`Kirjainta ${character} löytyi ${charactersMatched} kappaletta! Pyöritä uudelleen tai osta vokaali!`));
+        if (! hasBoughtVowel && playerInTurn.points >= 300) {
+            dispatch(addLog(`Kirjainta ${character.toUpperCase()} löytyi ${charactersMatched} kappaletta! Pyöritä uudelleen tai osta vokaali!`));
+        } else {
+            dispatch(addLog(`Kirjainta ${character.toUpperCase()} löytyi ${charactersMatched} kappaletta! Pyöritä uudelleen!`));
+        }
     } else {
         // Not a single match, so turn changes
         dispatch(changeTurn());
-        dispatch(addLog(`Kirjainta ${character} ei löytynyt! Vuoro siirtyy seuraavalle!`));
+        dispatch(addLog(`Kirjainta ${character.toUpperCase()} ei löytynyt! Vuoro siirtyy seuraavalle!`));
     }
     if (type === 'vowel') {
         dispatch(removeCharacter(character ,'vowels'));
@@ -103,10 +111,10 @@ const onSpinComplete = (spinValue) => (dispatch, getState) => {
         console.log('Tää vuoro nyt missas!');
         if (spinValue.name === 'Rosvo') {
             const currentPoints = _.get(_.find(_.get(state, 'playerReducer.players', []), (player) => player.id === _.get(state, 'playerReducer.playerTurn')), 'points');
-            dispatch(addPoints(-currentPoints))
-            dispatch(addLog('Ohisektori! Vuoro siirtyi seuraavalle!'));
-        } else {
+            dispatch(addPoints(-currentPoints));
             dispatch(addLog(`Rosvosektori! Pelaaja ${playerInTurn.name} menetti kaikki pisteensä!`));
+        } else {
+            dispatch(addLog('Ohisektori! Vuoro siirtyi seuraavalle!'));
         }
         dispatch(changeTurn());
         return;

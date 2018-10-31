@@ -39,12 +39,7 @@ class App extends Component {
 		return (
 			<Container fluid>
 				<Row>
-					<Col sm="12" md={{ size: 4, offset: 1 }}>
-						<h1 className="rainbow">Onnenpyörä</h1>
-					</Col>
-				</Row>
-				<Row>
-					<Col className="align-middle" sm="12" md={{ size: 8, offset: 0 }}>
+					<Col className="align-middle anim-bounce-left" sm="12" md={{ size: 4, offset: 0 }}>
 					{isGameStarted && (
 						<ButtonGroup>
 							<Button onClick={this.resetGame}>Resetoi peli</Button>
@@ -53,7 +48,10 @@ class App extends Component {
 						</ButtonGroup>
 					)}
 					</Col>
-					<Col sm="12" md={4} className="d-flex justify-content-end">
+					<Col sm="12" md={{ size: 4, offset: 0 }}>
+						<h1 className="rainbow">Onnenpyörä</h1>
+					</Col>
+					<Col sm="12" md={4} className="d-flex justify-content-end anim-bounce-right">
 						<PlayerList players={players} playerTurn={playerTurn} />
 					</Col>
 				</Row>

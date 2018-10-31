@@ -10,6 +10,11 @@ import * as serviceWorker from './serviceWorker';
 import './darkly.scss';
 
 if (process.env.NODE_ENV === 'production') {
+
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+
   window.addEventListener("beforeunload", function (e) {
     var confirmationMessage = 'It looks like you have been editing something. '
                             + 'If you leave before saving, your changes will be lost.';

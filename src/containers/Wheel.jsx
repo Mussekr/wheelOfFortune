@@ -16,6 +16,10 @@ const insert = (arr, index, newItem) => [
 
 class PointWheel extends Component {
 
+    state = {
+        spinning: false,
+    };
+
     getColors(index) {
         if(index % 3 === 0) {
             return 'green';
@@ -41,23 +45,40 @@ class PointWheel extends Component {
         return segments;
     }
 
+    handleKeyDown = (ev) => {
+        if (ev.key === 'S' && ev.shiftKey && ! this.state.spinning && !this.props.showConsonants) {
+            this.setState({ spinning: true });
+            this.wheel.spinWheel();
+        }
+    };
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown);
+    }
+
     render() {
         const segments = this.getSegments();
         const { dispatch, showConsonants } = this.props;
         return (
             <>
-            <Col sm={12} md={8}>
+            <Col sm={12} md={8} className="anim-bounce-left">
                 <Wheel
                     segments={segments}
-                    onComplete={(selected) => dispatch(actionCreators.onSpinComplete(selected))}
+                    onComplete={(selected) => {
+                        this.setState({ spinning: false });
+                        dispatch(actionCreators.onSpinComplete(selected));
+                    }}
                     ref={( wheelRef ) => {
                         this.wheel = wheelRef;
                     }}
                 />
             </Col>
-            <Col sm={12} md={4}>
+            <Col sm={12} md={4} className="anim-bounce-right">
                 {!showConsonants && (
-                    <Button block color="primary" onClick={() => this.wheel.spinWheel()}>Pyöritä</Button>
+                    <Button disabled={this.state.spinning} block color="primary" onClick={() => {
+                        this.wheel.spinWheel();
+                        this.setState({ spinning: true });
+                    }}>Pyöritä</Button>
                 )}
             </Col>
             </>

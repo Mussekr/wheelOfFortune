@@ -34,32 +34,30 @@ class Game extends Component {
                     <Wheel />
                 </Row>
                 <Row>
-                    <Col sm={12} md={{ size: 12 }} className="d-flex justify-content-end">
+                    <Col sm={12} md={{ size: 12 }} className="d-flex justify-content-end anim-bounce-right">
                         <WordList override={overridePhrase} phrase={phrase} />
                     </Col>
                 </Row>
-                {
-                    showConsonants && ! overridePhrase && (
-                        <Row>
-                            <Col sm={12} md={{ size: 12 }} className="text-center">
-                                <h3>Valitse konsonantti</h3>
-                                <CharacterList onClickCharacter={(selected) => dispatch(actionCreators.checkPhraseCharacters(selected, 'consonant'))} characters={consonants} />
-                            </Col>
-                        </Row>
-                    )
-                }
-                {
-                    !showConsonants && !hasBoughtVowel && _.get(playerInTurn, 'points') >= 300 && ! overridePhrase &&  (
-                        <Row>
-                            <Col sm={12} md={{ size: 11 }} className="text-center">
-                                <h3>Osta vokaali, 300 points / kpl</h3>
-                                <CharacterList onClickCharacter={(selected) => dispatch(actionCreators.checkPhraseCharacters(selected, 'vowel'))} characters={vowels} />
-                            </Col>
-                        </Row>
-                    )
-                }
                 <Row>
-                    <Col sm={12} md={{ size: 4, offset: 8 }} className="text-left">
+                    <Col sm={12} md={7} className="anim-bounce-left">
+                        {
+                            !showConsonants && !hasBoughtVowel && _.get(playerInTurn, 'points') >= 300 && ! overridePhrase &&  (
+                                <>
+                                    <h3>Osta vokaali, 300 points / kpl</h3>
+                                    <CharacterList onClickCharacter={(selected) => dispatch(actionCreators.checkPhraseCharacters(selected, 'vowel'))} characters={vowels} />
+                                </>
+                            )
+                        }
+                        {
+                            showConsonants && ! overridePhrase && (
+                                <>
+                                    <h3>Valitse konsonantti</h3>
+                                    <CharacterList onClickCharacter={(selected) => dispatch(actionCreators.checkPhraseCharacters(selected, 'consonant'))} characters={consonants} />
+                                </>
+                            )
+                        }
+                    </Col>
+                    <Col sm={12} md={{ size: 5, }} className="text-left anim-bounce-right">
                         <Logs />
                     </Col>
                 </Row>
